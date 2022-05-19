@@ -79,11 +79,16 @@ $ sudo microk8s enable gopaddle-lite
 #### Default values:
 By default, the latest gopaddle-lite version is installed, which is currently 4.2.3.
 
-An IP address is required to access the gopaddle lite end point. The default
-IP address is determined in the order mentioned below:  
-- If a static IP address has been configured, this is chosen as the IP address for the access end point
-- If microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
-- Else, the Internal/Private IP address configured for the microk8s cluster is used as the IP address for the access end point
+An IP address is required to access the gopaddle lite end point. When not
+supplied on command line, the default IP address is determined in the order
+mentioned below:  
+- If the node in microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
+- Else, the Internal/Private IP address of the node configured in microk8s cluster is used as the IP address for the access end point
+
+#### Important Note: 
+If the gopaddle dashboard has to to be accessible from public network, then, make sure that this machine is configured with an External IP address:
+- Either, the node in microk8s cluster is configured with an External/Public IP address
+- or, supply the External/Public IP address via '-i' option (described in a corresponding section below)
 
 Example:
 ```
@@ -96,24 +101,16 @@ Waiting for the gopaddle services to move to running state. This may take a whil
 gopaddle lite is enabled
 
 gopaddle lite access endpoint
-http://<InternalIP|PrivateIP>:30003
+http://10.245.64.9:30003
 ```
 
-The default 'private/internal' IP address of the microk8s node in this example was:
-```
-127.0.0.1 (i.e., 'localhost')
-```
+Note: The node IP address configured in the microk8s cluster above was determined using the 'get nodes' command of kubectl in microk8s as follows:
 
-Note: The IP address configured for the microk8s cluster can be determined using the 'cluster-info' command of kubectl in microk8s as follows:
 ```
-$ microk8s.kubectl cluster-info
-Kubernetes control plane is running at https://127.0.0.1:16443
-CoreDNS is running at https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-
-To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+$ sudo microk8s kubectl  get nodes -o wide
+NAME   STATUS   ROLES    AGE   VERSION                    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
+sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>        Ubuntu 18.04.5 LTS   4.15.0-176-generic   containerd://1.5.11
 ```
-
-The IP address shown against the Kubernetes control plane above is the IP address configured for the microk8s cluster.
 
 
 2. Wait for ready state
@@ -157,25 +154,20 @@ above gopaddle access endpoint in a web browser of your choice.
 
 The gopaddle lite access endpoint in the example shown above is:
 ```
-http://127.0.0.1:30003
+http://10.245.64.9:30003
 ```
 
-Equivalently, you can use the below as well:
-```
-http://localhost:30003
-```
+### Enabling Firewall ports
 
-### Firewall settings
+The following TCP network ports have to be enabled/opened by administrator for access:
 
-The following TCP network ports have to be opened by administrator for access:
+- <b>Ports 30000 to 30006</b>: gopaddle-lite uses these network ports to provide the gopaddle-lite access endpoints.
 
-- <b>Ports 30000 to 30006</b>: gopaddle-lite uses these TCP network ports to provide the gopaddle-lite access endpoints.
-
-- <b>Port 16443</b>: The Kubernetes control plane on microk8s runs by default on this TCP network port
+- <b>Port 16443</b>: The Kubernetes control plane on microk8s runs by default on this network port
  
 - <b>32000</b>: Service node port for Grafana dashboard on Kubernetes
 
-- Any other TCP network port accessed by applications launched as Kubernetes services
+- Any other network port accessed by applications launched as Kubernetes services
 
 
 ### Access Modes
@@ -195,9 +187,12 @@ Usage:
 $ sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
 ```
 
-If '-i' option is used, the IP address specified is used as the static IP
-address of the microk8s cluster. This could be the public or private IP address
-configured by the administrator to access the gopaddle endpoint.
+If '-i' option is used, the IP address specified is used as the <i>static</i>
+IP address for the access end point. This could be the public or private
+IP address configured by the administrator to access the gopaddle endpoint.
+
+If the gopaddle dashboard has to to be accessible from public network, then,
+make sure that the IP address passed via '-i' option is an External/Public IP address.
 
 #### <i>Note: if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "Default values:" in section: "Steps to enable gopaddle addon for microk8s"</i>
 
