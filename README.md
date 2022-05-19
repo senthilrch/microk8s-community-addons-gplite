@@ -104,7 +104,7 @@ gopaddle lite access endpoint
 http://10.245.64.9:30003
 ```
 
-Note: The node IP address configured in the microk8s cluster above was determined using the 'get nodes' command of kubectl in microk8s as follows:
+Note: The node IP address configured in the microk8s cluster above can be determined using the 'get nodes' command of kubectl in microk8s as follows:
 
 ```
 $ sudo microk8s kubectl  get nodes -o wide
