@@ -1,0 +1,8 @@
+microk8s-addons:
+  addons:
+    - name: "gopaddle-lite"
+      description: "Cheapest, fastest and simplest way to modernize your applications"
+      version: "4.2.3"
+      check_status: "deployment.apps/gateway"
+      supported_architectures:
+        - amd64
