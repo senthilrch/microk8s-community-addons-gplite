@@ -54,7 +54,7 @@ microk8s is running
 
 1. Add gopaddle addon repo in microk8s:
 ```
-$ sudo microk8s addons repo add gp-lite https://github.com/gopaddle-io/microk8s-community-addons.git
+$ sudo microk8s addons repo add gp-lite https://github.com/gopaddle-io/microk8s-community-addons-gplite.git
 ```
 
 2. Check microk8s gopaddle addon is added
