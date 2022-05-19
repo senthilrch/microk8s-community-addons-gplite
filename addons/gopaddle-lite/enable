@@ -122,9 +122,13 @@ then
   echo "http://$STATICIP:30003"
 elif [ $PUBLICIP == true ]
 then 
-  echo "http://<ExternalIP>:30003"
+  IP=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].status.addresses[]|select(.type=="ExternalIP")|.address')
+  ExternalIP=$($IP | cut -d '"' -f 2)
+  echo "http://$ExternalIP:30003" 
 else
-  echo "http://<InternalIP>:30003" 
+  IP=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].status.addresses[]|select(.type=="InternalIP")|.address')
+  INTERNALIP=$($IP | cut -d '"' -f 2)
+  echo "http://$INTERNALIP:30003" 
 fi
 
 }
