@@ -103,7 +103,8 @@ NAME   STATUS   ROLES    AGE   VERSION                    INTERNAL-IP   EXTERNAL
 sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>        Ubuntu 18.04.5 LTS   4.15.0-176-generic   containerd://1.5.11
 ```
 
-Example:
+
+<b>Example:</b>
 ```
 $ sudo microk8s enable gopaddle-lite
 Infer repository gp-lite for addon gopaddle-lite
@@ -154,7 +155,7 @@ pod/gateway-b768864ff-s54b2 condition met
 ```
 
 
-<b>Step 3. Access gopaddle dashboard</b>
+<b>Step 3. Access gopaddle dashboard</b>  
 This is a Graphical User Interface, and can be accessed using the
 above gopaddle access endpoint in a web browser of your choice.
 
