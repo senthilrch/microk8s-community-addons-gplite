@@ -87,9 +87,11 @@ mentioned below:
 
 #### Important Notes:  
 
-1. If the gopaddle dashboard has to to be accessible from public network, then, make sure that this machine is configured with an External IP address:
+To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
 
-- Either, the node in microk8s cluster is configured with an External/Public IP address
+- Either supply the External/Public IP address as the static IP address via '-i' option (described in a corresponding section below)
+
+- or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
 Note: The node IP address configured in the microk8s cluster above can be determined using the 'get nodes' command of kubectl in microk8s as follows:
 
@@ -98,8 +100,6 @@ $ sudo microk8s kubectl  get nodes -o wide
 NAME   STATUS   ROLES    AGE   VERSION                    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>        Ubuntu 18.04.5 LTS   4.15.0-176-generic   containerd://1.5.11
 ```
-
-- or, supply the External/Public IP address via '-i' option (described in a corresponding section below)
 
 2. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
 
