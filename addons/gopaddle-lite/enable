@@ -21,7 +21,7 @@ fi
 
 STATICIP=""
 HELM_VERSION="4.2.3"
-STORAGECLASS=""
+STORAGECLASS="microk8s-hostpath"
 ARGS=$(getopt -a --options i:v:s: --longoptions "ip:,version:,storageclass:" -- "$@")
 eval set -- "$ARGS"
 
