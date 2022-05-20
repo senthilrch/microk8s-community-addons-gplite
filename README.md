@@ -71,7 +71,7 @@ Among others, you should see the following listed:
 
 ## Steps to enable gopaddle addon for microk8s
 
-1. Enable gopaddle addon in microk8s:
+<b>Step 1. Enable gopaddle addon in microk8s:</b>
 ```
 $ sudo microk8s enable gopaddle-lite
 ```
@@ -87,7 +87,9 @@ mentioned below:
 
 #### Important Notes:  
 
-To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
+1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
+
+2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
 
 - Either supply the External/Public IP address as the static IP address via '-i' option (described in a corresponding section below)
 
@@ -100,8 +102,6 @@ $ sudo microk8s kubectl  get nodes -o wide
 NAME   STATUS   ROLES    AGE   VERSION                    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>        Ubuntu 18.04.5 LTS   4.15.0-176-generic   containerd://1.5.11
 ```
-
-2. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
 
 Example:
 ```
@@ -118,7 +118,7 @@ http://10.245.64.9:30003
 ```
 
 
-2. Wait for ready state
+<b>Step 2. Wait for ready state</b>
 
 Before you can use all the gopaddle services, they need to be in Ready state.
 To check and wait until all the services move to Ready state, use the below
@@ -154,7 +154,8 @@ pod/gateway-b768864ff-s54b2 condition met
 ```
 
 
-3. Access gopaddle dashboard (Graphical User Interface) using the
+<b>Step 3. Access gopaddle dashboard</b>
+This is a Graphical User Interface, and can be accessed using the
 above gopaddle access endpoint in a web browser of your choice.
 
 The gopaddle lite access endpoint in the example shown above is:
