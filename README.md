@@ -80,15 +80,18 @@ $ sudo microk8s enable gopaddle-lite
 By default, the latest gopaddle-lite version is installed, which is currently 4.2.3.
 
 An IP address is required to access the gopaddle lite end point. When not
-supplied on command line, the default IP address is determined in the order
+supplied from the command line, the default IP address is determined in the order
 mentioned below:  
 - If the node in microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
 - Else, the Internal/Private IP address of the node configured in microk8s cluster is used as the IP address for the access end point
 
-#### Important Note: 
-If the gopaddle dashboard has to to be accessible from public network, then, make sure that this machine is configured with an External IP address:
+#### Important Notes:  
+
+1. If the gopaddle dashboard has to to be accessible from public network, then, make sure that this machine is configured with an External IP address:
 - Either, the node in microk8s cluster is configured with an External/Public IP address
 - or, supply the External/Public IP address via '-i' option (described in a corresponding section below)
+
+2. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
 
 Example:
 ```
@@ -165,17 +168,12 @@ The following TCP network ports have to be enabled/opened by administrator for a
 
 - <b>Port 16443</b>: The Kubernetes control plane on microk8s runs by default on this network port
  
-- <b>32000</b>: Service node port for Grafana dashboard on Kubernetes
+- <b>Port 32000</b>: Service node port for Grafana dashboard on Kubernetes
 
 - Any other network port accessed by applications launched as Kubernetes services
 
+- Any <b>node port</b> assigned for an application deployed on microk8s
 
-### Access Modes
-
-Access mode is http.  
-https access is not supported in gopaddle Lite add-on.
-
-Continuous Integration (CI) capability is not supported since that requires https access.
 
 ### Options supported by 'enable' in gopaddle lite ('-i' and '-v')
 
@@ -185,11 +183,12 @@ options during 'enable' of gopaddle lite addon in microk8s.
 Usage:
 ```
 $ sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
-```
 
-If '-i' option is used, the IP address specified is used as the <i>static</i>
-IP address for the access end point. This could be the public or private
-IP address configured by the administrator to access the gopaddle endpoint.
+Basic Options:
+  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
+                 a public or private IP address of the microk8s node
+  --version|-v : gopaddle lite helm chart version (default 4.2.3)
+```
 
 If the gopaddle dashboard has to to be accessible from public network, then,
 make sure that the IP address passed via '-i' option is an External/Public IP address.
@@ -270,15 +269,4 @@ http://help.gopaddle.io/en/articles/6227234-support-matrix-for-gopaddle-lite-4-2
 
 For help related to gopaddle community (lite) edition, visit the gopaddle Help Center at:
      https://help.gopaddle.io
-
-Below is the command-line help for 'enable' command for gopaddle-lite 'addon' on microk8s:
-
-```
-$ sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
-
-Basic Options:
-  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
-                 a public or private IP address of the microk8s node
-  --version|-v : gopaddle lite helm chart version
-```
 
