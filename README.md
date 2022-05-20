@@ -82,8 +82,8 @@ By default, the latest gopaddle-lite version is installed, which is currently 4.
 An IP address is required to access the gopaddle lite end point. When not
 supplied from the command line, the default IP address is determined in the order
 mentioned below:  
-- If the node in microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
-- Else, the Internal/Private IP address of the node configured in microk8s cluster is used as the IP address for the access end point
+- If the first node in microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
+- Else, the Internal/Private IP address of the first node configured in microk8s cluster is used as the IP address for the access end point
 
 #### Important Notes:  
 
