@@ -21,7 +21,7 @@ fi
 
 STATICIP=""
 HELM_VERSION="4.2.3"
-STORAGECLASS="microk8s-hostpath"
+STORAGECLASS=""
 ARGS=$(getopt -a --options i:v:s: --longoptions "ip:,version:,storageclass:" -- "$@")
 eval set -- "$ARGS"
 
@@ -33,9 +33,9 @@ while true; do
     -v|--version)
       HELM_VERSION="$2"
       shift 2;;
-    -s|--storageclass)
-      STORAGECLASS="$2"
-      shift 2;;
+    # -s|--storageclass)
+    #   STORAGECLASS="$2"
+    #   shift 2;;
     --)
       break;;
   esac
@@ -56,11 +56,11 @@ else
      echo ""
 fi
 
-# if [ -z "$STORAGECLASS" ]
-# then
-#   run_with_sudo $KUBECTL apply -f $CURRENT_DIR/storageclass-retain.yaml
-#   STORAGECLASS="microk8s-hostpath-retain"
-# fi
+if [ -z "$STORAGECLASS" ]
+then
+  run_with_sudo $KUBECTL apply -f $CURRENT_DIR/storageclass-retain.yaml
+  STORAGECLASS="microk8s-hostpath-retain"
+fi
 
 # if $KUBECTL get ns gp-lite >/dev/null 2>&1
 # then
@@ -158,6 +158,15 @@ else
   #INTERNALIP=$($IP | cut -d '"' -f 2)
   echo "http://$IP:30003" 
 fi
+
+#adding lable to volume
+PVCLIST=$(run_with_sudo $KUBECTL get pvc -n gp-lite -o json | jq '.items[].spec.volumeName')
+
+for i in $(echo $PVCLIST | tr " " "\n")
+do
+	  PVNAME=$(echo $i | cut -d '"' -f 2)
+    run_with_sudo $KUBECTL patch  pv $PVNAME --type='merge' -p '{"metadata":{"labels":{"gp-install-pv":"'$STORAGECLASS'"}}}'
+done
 
 }
 
