@@ -160,6 +160,8 @@ else
 fi
 
 #adding lable to volume
+echo ""
+echo "adding lable to persistentvolume"
 PVCLIST=$(run_with_sudo $KUBECTL get pvc -n gp-lite -o json | jq '.items[].spec.volumeName')
 
 for i in $(echo $PVCLIST | tr " " "\n")
