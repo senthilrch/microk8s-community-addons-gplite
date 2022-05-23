@@ -85,16 +85,6 @@ mentioned below:
 - If the first node in microk8s cluster is configured with an External/Public IP address, this is chosen as the IP address for the access end point
 - Else, the Internal/Private IP address of the first node configured in microk8s cluster is used as the IP address for the access end point
 
-#### Important Notes:  
-
-1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
-
-2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
-
-- Either supply the External/Public IP address as the static IP address via '-i' option (described in a corresponding section below)
-
-- or, make sure the first node in microk8s cluster is configured with an External/Public IP address
-
 Note: The node IP address configured in the microk8s cluster above can be determined using the 'get nodes' command of kubectl in microk8s as follows:
 
 ```
@@ -117,6 +107,16 @@ gopaddle lite is enabled
 gopaddle lite access endpoint
 http://10.245.64.9:30003
 ```
+
+#### Important Notes:  
+
+1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
+
+2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
+
+- Either supply the External/Public IP address as the static IP address via '-i' option (described in a corresponding section below)
+
+- or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
 
 <b>Step 2. Wait for ready state</b>
