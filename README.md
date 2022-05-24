@@ -18,8 +18,8 @@ indicate the 'gopaddle addon' on microk8s:
 
 If not installed, the following steps can be used on Ubuntu 18.04:
 ```
-$ sudo apt-get install snapd -y
-$ sudo snap install core
+sudo apt-get install snapd -y
+sudo snap install core
 ```
 
 5. Set the path for snap tool to be executed as a command:
@@ -31,17 +31,17 @@ export PATH=$PATH:/snap/bin
 
 If not installed, use the below step to install the same:
 ```
-$ sudo snap install microk8s --classic --channel=1.24
+sudo snap install microk8s --classic --channel=1.24
 ```
 
 If already installed, you may want to refresh microk8s:
 ```
-$ sudo snap refresh microk8s --channel=1.24
+sudo snap refresh microk8s --channel=1.24
 ```
 
 7. Check and ensure that microk8s service is running:
 ```
-$ sudo microk8s status --wait-ready
+sudo microk8s status --wait-ready
 ```
 
 you should see output like the following:
@@ -54,12 +54,12 @@ microk8s is running
 
 1. Add gopaddle addon repo in microk8s:
 ```
-$ sudo microk8s addons repo add gp-lite https://github.com/gopaddle-io/microk8s-community-addons-gplite.git
+sudo microk8s addons repo add gp-lite https://github.com/gopaddle-io/microk8s-community-addons-gplite.git
 ```
 
 2. Check microk8s gopaddle addon is added
 ```
-$ sudo microk8s status
+sudo microk8s status
 ```
 
 Among others, you should see the following listed:
@@ -73,7 +73,7 @@ Among others, you should see the following listed:
 
 <b>Step 1. Enable gopaddle addon in microk8s:</b>
 ```
-$ sudo microk8s enable gopaddle-lite
+sudo microk8s enable gopaddle-lite
 ```
 
 #### Default values:
@@ -88,7 +88,7 @@ mentioned below:
 Note: The node IP address configured in the microk8s cluster above can be determined using the 'get nodes' command of kubectl in microk8s as follows:
 
 ```
-$ sudo microk8s kubectl  get nodes -o wide
+sudo microk8s kubectl  get nodes -o wide
 NAME   STATUS   ROLES    AGE   VERSION                    INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
 sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>        Ubuntu 18.04.5 LTS   4.15.0-176-generic   containerd://1.5.11
 ```
@@ -96,7 +96,7 @@ sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>  
 
 <b>Example:</b>
 ```
-$ sudo microk8s enable gopaddle-lite
+sudo microk8s enable gopaddle-lite
 Infer repository gp-lite for addon gopaddle-lite
 Static IP input is not provided. External IP is not set for the microk8s node. Assuming Internal IP of the microk8s node for the gopaddle access endpoint.
 ...
@@ -126,7 +126,7 @@ To check and wait until all the services move to Ready state, use the below
 command:
 
 ```
-$ sudo microk8s.kubectl wait --for=condition=ready pod -l released-by=gopaddle -n gp-lite
+sudo microk8s.kubectl wait --for=condition=ready pod -l released-by=gopaddle -n gp-lite
 ```
 
 The following is a sample output when the gopaddle services are in ready state:
@@ -186,7 +186,7 @@ options during 'enable' of gopaddle lite addon in microk8s.
 
 Usage:
 ```
-$ sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
+sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
 
 Basic Options:
   --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
@@ -201,7 +201,7 @@ make sure that the IP address passed via '-i' option is an External/Public IP ad
 
 Example:
 ```
-$ sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
 ```
 
 In this case, the 'enable' command will give the below output message:
@@ -223,7 +223,7 @@ http://130.198.9.42:30003
 
 Issue the below command to disable gopaddle addon for microk8s:
 ```
-$ sudo microk8s disable gopaddle-lite
+sudo microk8s disable gopaddle-lite
 ```
 
 You'll see the output as shown below:
@@ -242,7 +242,7 @@ previously added at the time of installation of gopaddle addon for microk8s),
 use the below command:
 
 ```
-$ sudo microk8s addons repo update gp-lite
+sudo microk8s addons repo update gp-lite
 ```
 
 This results in pulling any updates done to gopaddle addon repo. If it is
