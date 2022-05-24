@@ -2,9 +2,9 @@
 
 Note: in the below, the following terms are used interchangeably to
 indicate the 'gopaddle addon' on microk8s:
-- <i>gopaddle Lite addon</i>
-- <i>gopaddle-lite addon</i>
-- <i>gp-lite addon</i>
+- gopaddle Lite addon
+- gopaddle-lite addon
+- gp-lite addon
 
 ## Pre-requisites
 
