@@ -76,7 +76,7 @@ Among others, you should see the following listed:
 sudo microk8s enable gopaddle-lite
 ```
 
-#### Default values:
+#### (a) Using default values:
 By default, the latest gopaddle-lite version is installed, which is currently 4.2.3.
 
 An IP address is required to access the gopaddle lite end point. When not
@@ -108,6 +108,46 @@ gopaddle lite access endpoint
 http://10.245.64.9:30003
 ```
 
+
+#### (b) Using '-i' and '-v' options
+
+You can supply \<IP Address\> and \<gopaddle version\> through command line
+options during 'enable' of gopaddle lite addon in microk8s.
+
+Usage:
+```
+sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
+
+Basic Options:
+  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
+                 a public or private IP address of the microk8s node
+  --version|-v : gopaddle lite helm chart version (default 4.2.3)
+```
+
+If the gopaddle dashboard has to to be accessible from public network, then,
+make sure that the IP address passed via '-i' option is an External/Public IP address.
+
+#### <i>Note: if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(a) Using default values:"</i>
+
+<b>Example:</b>
+```
+sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+```
+
+In this case, the 'enable' command will give the below output message:
+```
+Infer repository gp-lite for addon gopaddle-lite
+static IP of the microk8s cluster: 130.198.9.42
+...
+Waiting for the gopaddle services to move to running state. This may take a while.
+...
+Enabling gopaddle lite
+...
+gopaddle lite is enabled
+
+gopaddle lite access endpoint
+http://130.198.9.42:30003
+```
 #### Important Notes:  
 
 1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
@@ -178,46 +218,6 @@ The following TCP network ports have to be enabled/opened by administrator for a
 
 - Any <b>node port</b> assigned for an application deployed on microk8s
 
-
-### Options supported by 'enable' in gopaddle lite ('-i' and '-v')
-
-You can supply \<IP Address\> and \<gopaddle version\> through command line
-options during 'enable' of gopaddle lite addon in microk8s.
-
-Usage:
-```
-sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
-
-Basic Options:
-  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
-                 a public or private IP address of the microk8s node
-  --version|-v : gopaddle lite helm chart version (default 4.2.3)
-```
-
-If the gopaddle dashboard has to to be accessible from public network, then,
-make sure that the IP address passed via '-i' option is an External/Public IP address.
-
-#### <i>Note: if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "Default values:" in section: "Steps to enable gopaddle addon for microk8s"</i>
-
-Example:
-```
-sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
-```
-
-In this case, the 'enable' command will give the below output message:
-```
-Infer repository gp-lite for addon gopaddle-lite
-static IP of the microk8s cluster: 130.198.9.42
-...
-Waiting for the gopaddle services to move to running state. This may take a while.
-...
-Enabling gopaddle lite
-...
-gopaddle lite is enabled
-
-gopaddle lite access endpoint
-http://130.198.9.42:30003
-```
 
 ## Steps to disable gopaddle addon for microk8s
 
