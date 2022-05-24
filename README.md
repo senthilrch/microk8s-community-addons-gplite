@@ -154,9 +154,9 @@ http://130.198.9.42:30003
 
 2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
 
-  - Either supply the External/Public IP address as the static IP address via '-i' option
+    - Either supply the External/Public IP address as the static IP address via '-i' option
 
-  - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
+    - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
 
 <b>Step 2. Wait for ready state</b>
