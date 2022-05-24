@@ -71,7 +71,7 @@ Among others, you should see the following listed:
 
 ## Steps to enable gopaddle addon for microk8s
 
-<b>Step 1. Enable gopaddle addon in microk8s:</b>
+#### Step 1. Enable gopaddle addon in microk8s:
 ```
 sudo microk8s enable gopaddle-lite
 ```
@@ -94,7 +94,7 @@ sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>  
 ```
 
 
-<b>Example:</b>
+#### Example:
 ```
 sudo microk8s enable gopaddle-lite
 Infer repository gp-lite for addon gopaddle-lite
@@ -129,7 +129,7 @@ make sure that the IP address passed via '-i' option is an External/Public IP ad
 
 <i><b>Note:</b> if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(a) Using default values:"</i>
 
-<b>Example:</b>
+#### Example:
 ```
 sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
 ```
@@ -159,7 +159,7 @@ http://130.198.9.42:30003
     - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
 
-<b>Step 2. Wait for ready state</b>
+#### Step 2. Wait for ready state
 
 Before you can use all the gopaddle services, they need to be in Ready state.
 To check and wait until all the services move to Ready state, use the below
@@ -195,7 +195,8 @@ pod/gateway-b768864ff-s54b2 condition met
 ```
 
 
-<b>Step 3. Access gopaddle dashboard</b>  
+#### Step 3. Access gopaddle dashboard
+
 This is a Graphical User Interface, and can be accessed using the
 above gopaddle access endpoint in a web browser of your choice.
 
