@@ -211,8 +211,6 @@ The following TCP network ports have to be enabled/opened by administrator for a
 
 - <b>Ports 30000 to 30006</b>: gopaddle-lite uses these network ports to provide the gopaddle-lite access endpoints.
 
-- <b>Port 16443</b>: The Kubernetes control plane on microk8s runs by default on this network port
- 
 - <b>Port 32000</b>: Service node port for Grafana dashboard on Kubernetes
 
 - Any other network port accessed by applications launched as Kubernetes services
