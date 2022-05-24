@@ -50,7 +50,7 @@ fi
 #remove pv resourceVersion and uid
 echo ""
 echo "removing the resourceVersion and uid in persistentvolume"
-DATA=$(run_with_sudo $KUBECTL get pv  -l gp-install-pv=microk8s-hostpath-retain -o json | jq '.items[].metadata.name')
+DATA=$(run_with_sudo $KUBECTL get pv  -l gp-install-pv=microk8s-hostpath-gp-retain -o json | jq '.items[].metadata.name')
 
 for i in $(echo $DATA | tr " " "\n")
 do
