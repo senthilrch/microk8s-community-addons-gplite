@@ -127,7 +127,7 @@ Basic Options:
 If the gopaddle dashboard has to to be accessible from public network, then,
 make sure that the IP address passed via '-i' option is an External/Public IP address.
 
-#### <i>Note: if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(a) Using default values:"</i>
+<i><b>Note:</b> if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(a) Using default values:"</i>
 
 <b>Example:</b>
 ```
@@ -154,7 +154,7 @@ http://130.198.9.42:30003
 
 2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
 
-- Either supply the External/Public IP address as the static IP address via '-i' option (described in a corresponding section below)
+- Either supply the External/Public IP address as the static IP address via '-i' option
 
 - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
