@@ -140,9 +140,9 @@ echo ""
 echo "Waiting for the gopaddle volume to move bound. This may take a while."
 run_with_sudo $KUBECTL  wait pvc --for=jsonpath='{.status.phase}'=Bound -l released-by=gopaddle -n gp-lite --timeout=10m
 
-#adding lable to volume
+#adding label to volume
 echo ""
-echo "adding lable to persistentvolume"
+echo "adding label to persistentvolume"
 PVCLIST=$(run_with_sudo $KUBECTL get pvc -n gp-lite -o json | jq '.items[].spec.volumeName')
 
 for i in $(echo $PVCLIST | tr " " "\n")
