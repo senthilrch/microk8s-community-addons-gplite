@@ -347,7 +347,7 @@ Issue the below command to disable gopaddle addon for microk8s:
 sudo microk8s disable gopaddle-lite
 ```
 
-The following is a sample output:
+(1) The following is a sample output, if your microk8s local cluster is not registered in gopaddle:
 ```
 Infer repository gp-lite for addon gopaddle-lite
 Disabling gopaddle lite
@@ -363,6 +363,35 @@ persistentvolume/pvc-e57b1e41-2a4e-4173-830b-c5ada3994ded patched
 persistentvolume/pvc-9cf09d7d-3052-4829-b14a-fbc2a7afa795 patched
 persistentvolume/pvc-535469cf-4d62-4c36-b32e-cb067056fd14 patched
 persistentvolume/pvc-3b7295b5-e354-4480-aba3-be6f6bfdd8cf patched
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+"gp-lite" has been removed from your repositories
+Disabled gopaddle lite
+```
+
+(2) The following is a sample output, if your microk8s local cluster is already registered in gopaddle:
+```
+Infer repository gp-lite for addon gopaddle-lite
+Disabling gopaddle lite
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+release "gp-rabbitmq-4-2" uninstalled
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+release "gp-core-4-2" uninstalled
+namespace "gp-lite" deleted
+namespace "gopaddle-servers" deleted
+clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
+clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:event-exporter-rb" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
+service "default-http-backend" deleted
+deployment.apps "default-http-backend" deleted
+
+removing the resourceVersion and uid in persistentvolume
+persistentvolume/pvc-c48c3cb8-74f9-42c6-afa4-206d8b449510 patched
+persistentvolume/pvc-f0bcf3e1-17f9-4741-82ec-644915c6b702 patched
+persistentvolume/pvc-aa4ba662-348d-44aa-bbbe-d605ccff9f88 patched
+persistentvolume/pvc-04915fb2-cc6c-43dd-9f7c-4e08bfce6c0f patched
+persistentvolume/pvc-166080cc-85f8-40f5-9b89-c98450b14e71 patched
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
 "gp-lite" has been removed from your repositories
 Disabled gopaddle lite
