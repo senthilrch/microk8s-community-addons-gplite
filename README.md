@@ -72,11 +72,187 @@ Among others, you should see the following listed:
 ## Steps to enable gopaddle addon for microk8s
 
 #### Step 1. Enable gopaddle addon in microk8s:
+
+#### (a) Using '-i' and '-v' options
+
+You can supply \<IP Address\> and \<gopaddle version\> through command line
+options during 'enable' of gopaddle lite addon in microk8s.
+
+Usage:
+```
+sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
+
+Basic Options:
+  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
+                 a public or private IP address of the microk8s node
+  --version|-v : gopaddle lite helm chart version (default 4.2.3)
+```
+
+If the gopaddle dashboard has to to be accessible from public network, then,
+make sure that the IP address passed via '-i' option is an External/Public IP address.
+
+<i><b>Note:</b> if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(b) Using default values:"</i>
+
+#### Example:
+```
+sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+```
+
+The following is a sample output for the above example:
+```
+[kishore@sail ~]$ sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+Infer repository gp-lite for addon gopaddle-lite
+static IP of the microk8s cluster: 130.198.9.42
+
+storageclass.storage.k8s.io/microk8s-hostpath-gp-retain created
+Infer repository core for addon helm3
+Enabling Helm 3
+Fetching helm version v3.8.0.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 12.9M  100 12.9M    0     0  9559k      0  0:00:01  0:00:01 --:--:-- 9553k
+Helm 3 is enabled
+Infer repository core for addon storage
+DEPRECIATION WARNING: 'storage' is deprecated and will soon be removed. Please use 'hostpath-storage' instead.
+
+Infer repository core for addon hostpath-storage
+Enabling default storage class.
+WARNING: Hostpath storage is not suitable for production environments.
+
+deployment.apps/hostpath-provisioner created
+storageclass.storage.k8s.io/microk8s-hostpath created
+serviceaccount/microk8s-hostpath created
+clusterrole.rbac.authorization.k8s.io/microk8s-hostpath created
+clusterrolebinding.rbac.authorization.k8s.io/microk8s-hostpath created
+Storage will be available soon.
+Infer repository core for addon dns
+Enabling DNS
+Applying manifest
+serviceaccount/coredns created
+configmap/coredns created
+deployment.apps/coredns created
+service/kube-dns created
+clusterrole.rbac.authorization.k8s.io/coredns created
+clusterrolebinding.rbac.authorization.k8s.io/coredns created
+Restarting kubelet
+DNS is enabled
+Infer repository core for addon metrics-server
+Enabling Metrics-Server
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+clusterrolebinding.rbac.authorization.k8s.io/microk8s-admin created
+Metrics-Server is enabled
+Hit:1 https://download.docker.com/linux/ubuntu bionic InRelease
+Hit:2 https://dl.yarnpkg.com/debian stable InRelease                                                                       
+Get:3 http://mirrors.adn.networklayer.com/ubuntu bionic InRelease [242 kB]                                                 
+Hit:4 https://deb.nodesource.com/node_14.x bionic InRelease                                                    
+Hit:5 https://apt.releases.hashicorp.com bionic InRelease                                                      
+Get:6 http://mirrors.adn.networklayer.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:7 http://mirrors.adn.networklayer.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:8 http://mirrors.adn.networklayer.com/ubuntu bionic-security InRelease [88.7 kB]
+Fetched 494 kB in 2s (226 kB/s)   
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+51 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+jq is already the newest version (1.5+dfsg-2).
+0 upgraded, 0 newly installed, 0 to remove and 51 not upgraded.
+Enabling gopaddle lite
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+"gp-lite" already exists with the same configuration, skipping
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "gp-lite" chart repository
+Update Complete. ⎈Happy Helming!⎈
+namespace/gp-lite created
+
+Adding label 'gp-install-node=node1' to the node 'sail'
+
+node/sail labeled
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+NAME: gp-rabbitmq-4-2
+LAST DEPLOYED: Fri May 27 09:58:12 2022
+NAMESPACE: gp-lite
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+NAME: gp-core-4-2
+LAST DEPLOYED: Fri May 27 09:59:13 2022
+NAMESPACE: gp-lite
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+Waiting for the gopaddle volume to move bound. This may take a while.
+persistentvolumeclaim/data-rabbitmq-0 condition met
+persistentvolumeclaim/data-mongodb-0 condition met
+persistentvolumeclaim/data-influxdb-0 condition met
+persistentvolumeclaim/data-esearch-0 condition met
+
+adding label to persistentvolume
+persistentvolume/pvc-e57b1e41-2a4e-4173-830b-c5ada3994ded patched
+persistentvolume/pvc-3b7295b5-e354-4480-aba3-be6f6bfdd8cf patched
+persistentvolume/pvc-9cf09d7d-3052-4829-b14a-fbc2a7afa795 patched
+persistentvolume/pvc-60456f0c-9085-4d2c-98f9-189051004175 patched
+persistentvolume/pvc-535469cf-4d62-4c36-b32e-cb067056fd14 patched
+
+Waiting for the gopaddle services to move to running state. This may take a while.
+pod/deploymentmanager-85f55d549c-xpwzk condition met
+pod/usermanager-7c4d8c7787-vfr7b condition met
+pod/gateway-88b7f9dcf-xzps6 condition met
+pod/marketplace-7c96b6d5bd-448jf condition met
+pod/appworker-79ccbdfcd9-9gc4l condition met
+pod/activitymanager-6675d6567c-nd522 condition met
+pod/alertmanager-56ddf9644f-t46k8 condition met
+pod/appscanner-7975978bf-jxxns condition met
+pod/nodechecker-754785cd88-5wlkz condition met
+pod/clustermanager-d4d9bc954-648pv condition met
+pod/costmanager-69c6b5df4c-s8hrk condition met
+pod/redis-767b6468c6-5c8xg condition met
+pod/configmanager-7ff689677b-h4chg condition met
+pod/cloudmanager-65f854f76-7fcbr condition met
+pod/domainmanager-7bcd8dcdb7-fcq97 condition met
+pod/rabbitmq-0 condition met
+pod/mongodb-0 condition met
+pod/gpcore-774b96ccc7-ljm64 condition met
+pod/influxdb-0 condition met
+pod/webhook-7c6755b4-kdrzv condition met
+pod/esearch-0 condition met
+
+
+gopaddle lite is enabled
+
+gopaddle lite access endpoint
+http://130.198.9.42:30003
+```
+
+#### Important Notes:  
+
+1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
+
+2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
+
+    - Either supply the External/Public IP address as the static IP address via '-i' option
+
+    - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
+
+
+#### (b) Using default values:
 ```
 sudo microk8s enable gopaddle-lite
 ```
 
-#### (a) Using default values:
 By default, the latest gopaddle-lite version is installed, which is currently 4.2.3.
 
 An IP address is required to access the gopaddle lite end point. When not
@@ -97,84 +273,12 @@ sail   Ready    <none>   37d   v1.24.0-2+59bbb3530b6769   10.245.64.9   <none>  
 #### Example:
 ```
 sudo microk8s enable gopaddle-lite
-Infer repository gp-lite for addon gopaddle-lite
+...
 Static IP input is not provided. External IP is not set for the microk8s node. Assuming Internal IP of the microk8s node for the gopaddle access endpoint.
 ...
-Enabling gopaddle lite
-...
-"gp-lite" has been added to your repositories
-...
-namespace/gp-lite created
-...
-Waiting for the gopaddle volume to move bound. This may take a while.
-...
-adding label to persistentvolume
-...
-Waiting for the gopaddle services to move to running state. This may take a while.
-...
-gopaddle lite is enabled
-
 gopaddle lite access endpoint
 http://10.245.64.9:30003
 ```
-
-
-#### (b) Using '-i' and '-v' options
-
-You can supply \<IP Address\> and \<gopaddle version\> through command line
-options during 'enable' of gopaddle lite addon in microk8s.
-
-Usage:
-```
-sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
-
-Basic Options:
-  --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
-                 a public or private IP address of the microk8s node
-  --version|-v : gopaddle lite helm chart version (default 4.2.3)
-```
-
-If the gopaddle dashboard has to to be accessible from public network, then,
-make sure that the IP address passed via '-i' option is an External/Public IP address.
-
-<i><b>Note:</b> if '-i' and '-v' options are omitted, the default values used are as per the details already outlined under "(a) Using default values:"</i>
-
-#### Example:
-```
-sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
-```
-
-In this case, the 'enable' command will give the below output message:
-```
-Infer repository gp-lite for addon gopaddle-lite
-static IP of the microk8s cluster: 130.198.9.42
-...
-Enabling gopaddle lite
-...
-"gp-lite" has been added to your repositories
-...
-namespace/gp-lite created
-...
-Waiting for the gopaddle volume to move bound. This may take a while.
-...
-adding label to persistentvolume
-...
-Waiting for the gopaddle services to move to running state. This may take a while.
-...
-gopaddle lite is enabled
-
-gopaddle lite access endpoint
-http://130.198.9.42:30003
-```
-#### Important Notes:  
-
-1. Continuous Integration (CI) capability is not supported when a managed Source Control System like GitHub.com, GitLab.com or BitBucket.com is used and the gopaddle access endpoint is not accessible from the public network.
-
-2. To access the gopaddle dashboard from public network, make sure that this machine is configured with an External IP address as follows:
-
-    - Either supply the External/Public IP address as the static IP address via '-i' option
-
-    - or, make sure the first node in microk8s cluster is configured with an External/Public IP address
 
 
 #### Step 2. Wait for ready state
@@ -189,27 +293,27 @@ sudo microk8s.kubectl wait --for=condition=ready pod -l released-by=gopaddle -n 
 
 The following is a sample output when the gopaddle services are in ready state:
 ```
+pod/redis-767b6468c6-5c8xg condition met
 pod/rabbitmq-0 condition met
 pod/influxdb-0 condition met
 pod/esearch-0 condition met
-pod/redis-8564f6b9fd-zqb2q condition met
+pod/marketplace-7c96b6d5bd-448jf condition met
 pod/mongodb-0 condition met
-pod/appworker-7b687d86f6-hxp8s condition met
-pod/gpcore-6bc47c5c94-kq9jk condition met
-pod/costmanager-564c95fcdf-x7f2t condition met
-pod/clustermanager-d95cccbc-dhkl9 condition met
-pod/deploymentmanager-7967f54468-qw24m condition met
-pod/nodechecker-7ddfb5b556-pb9xm condition met
-pod/domainmanager-7c6c6f57f7-xfn2j condition met
-pod/marketplace-97bfcb68f-lnmnq condition met
-pod/configmanager-5c6878bc99-8pzw7 condition met
-pod/activitymanager-b7d669fb8-pcnhn condition met
-pod/appscanner-677cd5799-ztrxj condition met
-pod/usermanager-796bf9c8c9-f8tgg condition met
-pod/cloudmanager-6c8dd7c6c5-d8xpg condition met
-pod/alertmanager-77d4478976-24pgc condition met
-pod/webhook-785c846b44-wxwwd condition met
-pod/gateway-b768864ff-s54b2 condition met
+pod/costmanager-69c6b5df4c-s8hrk condition met
+pod/appscanner-7975978bf-jxxns condition met
+pod/nodechecker-754785cd88-5wlkz condition met
+pod/clustermanager-d4d9bc954-648pv condition met
+pod/gpcore-774b96ccc7-ljm64 condition met
+pod/appworker-79ccbdfcd9-9gc4l condition met
+pod/activitymanager-6675d6567c-nd522 condition met
+pod/usermanager-7c4d8c7787-vfr7b condition met
+pod/alertmanager-56ddf9644f-t46k8 condition met
+pod/deploymentmanager-85f55d549c-xpwzk condition met
+pod/cloudmanager-65f854f76-7fcbr condition met
+pod/gateway-88b7f9dcf-xzps6 condition met
+pod/configmanager-7ff689677b-h4chg condition met
+pod/domainmanager-7bcd8dcdb7-fcq97 condition met
+pod/webhook-7c6755b4-kdrzv condition met
 ```
 
 
@@ -243,28 +347,23 @@ Issue the below command to disable gopaddle addon for microk8s:
 sudo microk8s disable gopaddle-lite
 ```
 
-You'll see the output as shown below:
+The following is a sample output:
 ```
 Infer repository gp-lite for addon gopaddle-lite
 Disabling gopaddle lite
-...
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+release "gp-rabbitmq-4-2" uninstalled
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
+release "gp-core-4-2" uninstalled
 namespace "gp-lite" deleted
-namespace "gopaddle-servers" deleted
-clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
-clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
-clusterrolebinding.rbac.authorization.k8s.io "gopaddle:event-exporter-rb" deleted
-clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
-clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
-service "default-http-backend" deleted
-deployment.apps "default-http-backend" deleted
 
 removing the resourceVersion and uid in persistentvolume
-persistentvolume/pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b patched
-persistentvolume/pvc-90077fba-3652-4d07-abc2-dd116a314a83 patched
-persistentvolume/pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3 patched
-persistentvolume/pvc-e10a34f8-339c-462f-94d1-ef124fa3689a patched
-persistentvolume/pvc-11d6f048-864c-490c-979d-2e3987fe17c9 patched
-
+persistentvolume/pvc-60456f0c-9085-4d2c-98f9-189051004175 patched
+persistentvolume/pvc-e57b1e41-2a4e-4173-830b-c5ada3994ded patched
+persistentvolume/pvc-9cf09d7d-3052-4829-b14a-fbc2a7afa795 patched
+persistentvolume/pvc-535469cf-4d62-4c36-b32e-cb067056fd14 patched
+persistentvolume/pvc-3b7295b5-e354-4480-aba3-be6f6bfdd8cf patched
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /var/snap/microk8s/3272/credentials/client.config
 "gp-lite" has been removed from your repositories
 Disabled gopaddle lite
 ```
@@ -308,15 +407,11 @@ sudo microk8s kubectl get pv
 The following is a sample output:
 ```
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                           STORAGECLASS                  REASON   AGE
-pvc-d51e8914-53a5-4085-8849-79e37b5240df   10Gi       RWO            Retain           Released    gp-lite/data-influxdb-0         microk8s-hostpath-gp-retain            41h
-pvc-9131049c-68c6-4284-b56d-b8fc701620c8   10Gi       RWO            Retain           Released    gp-lite/data-mongodb-0          microk8s-hostpath-gp-retain            41h
-pvc-7c12b58d-bf12-4b7e-96aa-40a0305c0748   10Gi       RWO            Retain           Released    gp-lite/data-esearch-0          microk8s-hostpath-gp-retain            41h
-pvc-c758b6c1-36a5-48c7-97d4-d447052422db   10Gi       RWO            Retain           Released    gp-lite/data-rabbitmq-0         microk8s-hostpath-gp-retain            41h
-pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b   10Gi       RWO            Retain           Available   gp-lite/data-influxdb-0         microk8s-hostpath-gp-retain            33h
-pvc-90077fba-3652-4d07-abc2-dd116a314a83   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-build-0   microk8s-hostpath-gp-retain            41h
-pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3   10Gi       RWO            Retain           Available   gp-lite/data-mongodb-0          microk8s-hostpath-gp-retain            33h
-pvc-e10a34f8-339c-462f-94d1-ef124fa3689a   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-0         microk8s-hostpath-gp-retain            33h
-pvc-11d6f048-864c-490c-979d-2e3987fe17c9   10Gi       RWO            Retain           Available   gp-lite/data-esearch-0          microk8s-hostpath-gp-retain            33h
+pvc-60456f0c-9085-4d2c-98f9-189051004175   10Gi       RWO            Retain           Available   gp-lite/data-influxdb-0         microk8s-hostpath-gp-retain            20m
+pvc-e57b1e41-2a4e-4173-830b-c5ada3994ded   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-build-0   microk8s-hostpath-gp-retain            21m
+pvc-9cf09d7d-3052-4829-b14a-fbc2a7afa795   10Gi       RWO            Retain           Available   gp-lite/data-mongodb-0          microk8s-hostpath-gp-retain            20m
+pvc-535469cf-4d62-4c36-b32e-cb067056fd14   10Gi       RWO            Retain           Available   gp-lite/data-esearch-0          microk8s-hostpath-gp-retain            20m
+pvc-3b7295b5-e354-4480-aba3-be6f6bfdd8cf   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-0         microk8s-hostpath-gp-retain            21m
 ```
 
 Use the below command to delete the persistent volumes created by gopaddle:
@@ -326,13 +421,32 @@ sudo microk8s kubectl delete pv -l gp-install-pv=microk8s-hostpath-gp-retain
 
 The following is a sample output:
 ```
-persistentvolume "pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b" deleted
-persistentvolume "pvc-90077fba-3652-4d07-abc2-dd116a314a83" deleted
-persistentvolume "pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3" deleted
-persistentvolume "pvc-e10a34f8-339c-462f-94d1-ef124fa3689a" deleted
-persistentvolume "pvc-11d6f048-864c-490c-979d-2e3987fe17c9" deleted
+persistentvolume "pvc-60456f0c-9085-4d2c-98f9-189051004175" deleted
+persistentvolume "pvc-e57b1e41-2a4e-4173-830b-c5ada3994ded" deleted
+persistentvolume "pvc-9cf09d7d-3052-4829-b14a-fbc2a7afa795" deleted
+persistentvolume "pvc-535469cf-4d62-4c36-b32e-cb067056fd14" deleted
+persistentvolume "pvc-3b7295b5-e354-4480-aba3-be6f6bfdd8cf" deleted
 ```
 
+You can confirm the deletion of persistent volumes by checking again as follows:
+```
+sudo microk8s kubectl get pv
+```
+
+You should see an output as shown below:
+```
+No resources found
+```
+
+Remove the node label added during 'enable', as follows:
+```
+sudo microk8s kubectl label nodes sail  gp-install-node-
+```
+
+You should see the below output:
+```
+node/sail unlabeled
+```
 
 # Helm repository for gopaddle community (lite) edition
 
