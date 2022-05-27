@@ -100,6 +100,16 @@ sudo microk8s enable gopaddle-lite
 Infer repository gp-lite for addon gopaddle-lite
 Static IP input is not provided. External IP is not set for the microk8s node. Assuming Internal IP of the microk8s node for the gopaddle access endpoint.
 ...
+Enabling gopaddle lite
+...
+"gp-lite" has been added to your repositories
+...
+namespace/gp-lite created
+...
+Waiting for the gopaddle volume to move bound. This may take a while.
+...
+adding label to persistentvolume
+...
 Waiting for the gopaddle services to move to running state. This may take a while.
 ...
 gopaddle lite is enabled
@@ -139,9 +149,17 @@ In this case, the 'enable' command will give the below output message:
 Infer repository gp-lite for addon gopaddle-lite
 static IP of the microk8s cluster: 130.198.9.42
 ...
-Waiting for the gopaddle services to move to running state. This may take a while.
-...
 Enabling gopaddle lite
+...
+"gp-lite" has been added to your repositories
+...
+namespace/gp-lite created
+...
+Waiting for the gopaddle volume to move bound. This may take a while.
+...
+adding label to persistentvolume
+...
+Waiting for the gopaddle services to move to running state. This may take a while.
 ...
 gopaddle lite is enabled
 
@@ -231,6 +249,23 @@ Infer repository gp-lite for addon gopaddle-lite
 Disabling gopaddle lite
 ...
 namespace "gp-lite" deleted
+namespace "gopaddle-servers" deleted
+clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
+clusterrole.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:event-exporter-rb" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-kube-state-metrics" deleted
+clusterrolebinding.rbac.authorization.k8s.io "gopaddle:prometheus-tool-server" deleted
+service "default-http-backend" deleted
+deployment.apps "default-http-backend" deleted
+
+removing the resourceVersion and uid in persistentvolume
+persistentvolume/pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b patched
+persistentvolume/pvc-90077fba-3652-4d07-abc2-dd116a314a83 patched
+persistentvolume/pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3 patched
+persistentvolume/pvc-e10a34f8-339c-462f-94d1-ef124fa3689a patched
+persistentvolume/pvc-11d6f048-864c-490c-979d-2e3987fe17c9 patched
+
+"gp-lite" has been removed from your repositories
 Disabled gopaddle lite
 ```
 
@@ -258,10 +293,52 @@ execute the following steps:
 (2) Steps to enable gopaddle addon for microk8s (described in corresponding section above)  
  
 
+## Steps to uninstall gopaddle addon for microk8s
+
+Follow the below steps to uninstall gopaddle addon for microk8s:  
+(1) disable gopaddle addon for microk8s (described in corresponding section above)  
+(2) delete all PVs created by gopaddle (described next).
+
+After disabling gopaddle addon for microk8s, the persistent volumes used by gopaddle
+are still around. You can confirm this as follows:
+```
+sudo microk8s kubectl get pv
+```
+
+The following is a sample output:
+```
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                           STORAGECLASS                  REASON   AGE
+pvc-d51e8914-53a5-4085-8849-79e37b5240df   10Gi       RWO            Retain           Released    gp-lite/data-influxdb-0         microk8s-hostpath-gp-retain            41h
+pvc-9131049c-68c6-4284-b56d-b8fc701620c8   10Gi       RWO            Retain           Released    gp-lite/data-mongodb-0          microk8s-hostpath-gp-retain            41h
+pvc-7c12b58d-bf12-4b7e-96aa-40a0305c0748   10Gi       RWO            Retain           Released    gp-lite/data-esearch-0          microk8s-hostpath-gp-retain            41h
+pvc-c758b6c1-36a5-48c7-97d4-d447052422db   10Gi       RWO            Retain           Released    gp-lite/data-rabbitmq-0         microk8s-hostpath-gp-retain            41h
+pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b   10Gi       RWO            Retain           Available   gp-lite/data-influxdb-0         microk8s-hostpath-gp-retain            33h
+pvc-90077fba-3652-4d07-abc2-dd116a314a83   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-build-0   microk8s-hostpath-gp-retain            41h
+pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3   10Gi       RWO            Retain           Available   gp-lite/data-mongodb-0          microk8s-hostpath-gp-retain            33h
+pvc-e10a34f8-339c-462f-94d1-ef124fa3689a   10Gi       RWO            Retain           Available   gp-lite/data-rabbitmq-0         microk8s-hostpath-gp-retain            33h
+pvc-11d6f048-864c-490c-979d-2e3987fe17c9   10Gi       RWO            Retain           Available   gp-lite/data-esearch-0          microk8s-hostpath-gp-retain            33h
+```
+
+Use the below command to delete the persistent volumes created by gopaddle:
+```
+sudo microk8s kubectl delete pv -l gp-install-pv=microk8s-hostpath-gp-retain
+```
+
+The following is a sample output:
+```
+persistentvolume "pvc-a6822600-e8a3-4e3c-8d83-126a941f9c5b" deleted
+persistentvolume "pvc-90077fba-3652-4d07-abc2-dd116a314a83" deleted
+persistentvolume "pvc-1ab6d1ce-e8c5-47dd-8e2c-4be9289802b3" deleted
+persistentvolume "pvc-e10a34f8-339c-462f-94d1-ef124fa3689a" deleted
+persistentvolume "pvc-11d6f048-864c-490c-979d-2e3987fe17c9" deleted
+```
+
+
 # Helm repository for gopaddle community (lite) edition
 
 The 'enable' script above uses the Helm repository for gopaddle community (lite)
 edition. The documentation for the same is available at: https://github.com/gopaddle-io/gopaddle-lite
+
 
 # Support Matrix for gp-lite
 
