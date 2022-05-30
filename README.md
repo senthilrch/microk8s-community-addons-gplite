@@ -477,11 +477,6 @@ You should see the below output:
 node/sail unlabeled
 ```
 
-Remove the gopaddle addon repo in microk8s:
-```
-sudo microk8s addons repo remove gp-lite
-```
-
 # Helm repository for gopaddle community (lite) edition
 
 The 'enable' script above uses the Helm repository for gopaddle community (lite)
