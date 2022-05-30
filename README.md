@@ -425,9 +425,9 @@ execute the following steps:
 
 Follow the below steps to uninstall gopaddle addon for microk8s:  
 Step 1: disable gopaddle addon for microk8s (described in corresponding section above)  
-Step 2: delete all PVs created by gopaddle
-Step 3: Remove the node label added by gopaddle
-Step 4: Remove the gopaddle addon repo in microk8s
+Step 2: delete all PVs created by gopaddle  
+Step 3: Remove the node label added by gopaddle  
+Step 4: Remove the gopaddle addon repo in microk8s  
 
 #### Step 2: delete all PVs created by gopaddle
 
