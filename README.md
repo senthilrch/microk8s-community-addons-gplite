@@ -424,11 +424,15 @@ execute the following steps:
 ## Steps to uninstall gopaddle addon for microk8s
 
 Follow the below steps to uninstall gopaddle addon for microk8s:  
-(1) disable gopaddle addon for microk8s (described in corresponding section above)  
-(2) delete all PVs created by gopaddle (described next).
+Step 1: disable gopaddle addon for microk8s (described in corresponding section above)  
+Step 2: delete all PVs created by gopaddle
+Step 3: Remove the node label added by gopaddle
+Step 4: Remove the gopaddle addon repo in microk8s
 
-After disabling gopaddle addon for microk8s, the persistent volumes used by gopaddle
-are still around. You can confirm this as follows:
+#### Step 2: delete all PVs created by gopaddle
+
+After disabling gopaddle addon for microk8s, the persistent volumes used by
+gopaddle are still around. You can confirm this as follows:
 ```
 sudo microk8s kubectl get pv
 ```
@@ -467,6 +471,8 @@ You should see an output as shown below:
 No resources found
 ```
 
+#### Step 3: Remove the node label added by gopaddle
+
 Remove the node label added during 'enable', as follows:
 ```
 sudo microk8s kubectl label nodes sail  gp-install-node-
@@ -477,7 +483,9 @@ You should see the below output:
 node/sail unlabeled
 ```
 
-Remove the gopaddle addon repo in microk8s:
+#### Step 4: Remove the gopaddle addon repo in microk8s
+
+The below command removes the gopaddle addon repo in microk8s:
 ```
 sudo microk8s addons repo remove gp-lite
 ```
