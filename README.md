@@ -368,6 +368,9 @@ WARNING: Kubernetes configuration file is group-readable. This is insecure. Loca
 Disabled gopaddle lite
 ```
 
+#### Note: the microk8s local cluster is automatically registered with gopaddle on accessing the gopaddle lite access endpoint, accepting the license agreement and doing login for the first time.
+
+
 (2) The following is a sample output, if your microk8s local cluster is already registered in gopaddle:
 ```
 Infer repository gp-lite for addon gopaddle-lite
