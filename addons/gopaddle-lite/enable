@@ -46,7 +46,7 @@ if [ $STATICIP ]
 then
    echo "static IP of the microk8s cluster: $STATICIP"
    echo ""
-   run_with_sudo "$SNAP/microk8s-enable.wrapper" host-access:ip=$STATICIP
+   "$SNAP/microk8s-enable.wrapper" host-access:ip=$STATICIP
 elif $KUBECTL get node -o yaml | grep ExternalIP >/dev/null 2>&1
 then 
      echo "Static IP input is not provided. Assuming External IP of the microk8s node for the gopaddle access endpoint."
@@ -110,8 +110,6 @@ NODENAME=""
 
 if $KUBECTL get node -l gp-install-node=node1  >/dev/null 2>&1
 then
-NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
-else
 #getting node name
 NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
 echo ""
@@ -119,12 +117,15 @@ echo "Adding label 'gp-install-node=node1' to the node '$NODENAME'"
 echo ""
 #adding label in node 
 run_with_sudo $KUBECTL label nodes $NODENAME gp-install-node=node1 --overwrite=true
+else
+#getting node name
+NODENAME=$(run_with_sudo $KUBECTL get node -l gp-install-node=node1 -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
 fi
 
 if [ $PUBLICIP == true ]
 then
 #install rabbitmq
-run_with_sudo $HELM install gp-rabbitmq-4-2 gp-lite/gp-lite  --namespace gp-lite  --set global.routingType=NodePortWithOutIngress --set global.installType=public --set global.storageClassName=$STORAGECLASS --set global.gp-rabbitmq.enabled=true --set global.gp-lite-core.enabled=false --set global.nodeName=$NODENAME  --version $HELM_VERSION
+run_with_sudo $HELM install gp-rabbitmq-4-2 gp-lite/gp-lite  --namespace gp-lite  --set global.routingType=NodePortWithOutIngress --set global.installType=public --set global.storageClassName=$STORAGECLASS --set global.gp-rabbitmq.enabled=true --set global.gp-lite-core.enabled=false --set global.nodeSelector.gp-install-node=node1 --set global.nodeName=$NODENAME  --version $HELM_VERSION
 
 #install gp-lite
 sleep 1m
@@ -132,7 +133,7 @@ run_with_sudo $HELM install gp-core-4-2 gp-lite/gp-lite  --namespace gp-lite  --
 elif [ $PUBLICIP == false ]
 then 
 #install rabbitmq
-run_with_sudo $HELM install gp-rabbitmq-4-2 gp-lite/gp-lite  --namespace gp-lite  --set global.routingType=NodePortWithOutIngress --set global.installType=private --set global.storageClassName=$STORAGECLASS --set global.gp-rabbitmq.enabled=true --set global.gp-lite-core.enabled=false --set global.nodeName=$NODENAME --version $HELM_VERSION
+run_with_sudo $HELM install gp-rabbitmq-4-2 gp-lite/gp-lite  --namespace gp-lite  --set global.routingType=NodePortWithOutIngress --set global.installType=private --set global.storageClassName=$STORAGECLASS --set global.gp-rabbitmq.enabled=true --set global.gp-lite-core.enabled=false  --set global.nodeSelector.gp-install-node=node1 --set global.nodeName=$NODENAME --version $HELM_VERSION
 
 #install gp-lite
 sleep 1m
