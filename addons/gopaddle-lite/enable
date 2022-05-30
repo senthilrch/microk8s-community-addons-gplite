@@ -46,6 +46,7 @@ if [ $STATICIP ]
 then
    echo "static IP of the microk8s cluster: $STATICIP"
    echo ""
+   run_with_sudo "$SNAP/microk8s-enable.wrapper" host-access:ip=$STATICIP
 elif $KUBECTL get node -o yaml | grep ExternalIP >/dev/null 2>&1
 then 
      echo "Static IP input is not provided. Assuming External IP of the microk8s node for the gopaddle access endpoint."
@@ -62,11 +63,6 @@ then
   STORAGECLASS="microk8s-hostpath-gp-retain"
 fi
 
-# if $KUBECTL get ns gp-lite >/dev/null 2>&1
-# then
-#   echo "gopaddle-lite already enabled."
-#   exit 0
-# fi
 
 do_prerequisites() {
   refresh_opt_in_config "authentication-token-webhook" "true" kubelet
@@ -110,6 +106,12 @@ else
   run_with_sudo $KUBECTL create ns gp-lite
 fi
 
+NODENAME=""
+
+if $KUBECTL get node -l gp-install-node=node1  >/dev/null 2>&1
+then
+NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
+else
 #getting node name
 NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
 echo ""
@@ -117,6 +119,7 @@ echo "Adding label 'gp-install-node=node1' to the node '$NODENAME'"
 echo ""
 #adding label in node 
 run_with_sudo $KUBECTL label nodes $NODENAME gp-install-node=node1 --overwrite=true
+fi
 
 if [ $PUBLICIP == true ]
 then
