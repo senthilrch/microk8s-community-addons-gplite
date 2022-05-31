@@ -108,7 +108,9 @@ fi
 
 NODENAME=""
 
-if $KUBECTL get node -l gp-install-node=node1  >/dev/null 2>&1
+NODELABEL=$($KUBECTL get node -l gp-install-node=node1)
+
+if [ "$NODELABEL" = "No resources found" ]
 then
 #getting node name
 NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
@@ -142,7 +144,7 @@ fi
 
 echo ""
 echo "Waiting for the gopaddle volume to move bound. This may take a while."
-run_with_sudo $KUBECTL  wait pvc --for=jsonpath='{.status.phase}'=Bound -l released-by=gopaddle -n gp-lite --timeout=10m
+run_with_sudo $KUBECTL  wait pvc --for=jsonpath='{.status.phase}'=Bound -l released-by=gopaddle -n gp-lite --timeout=20m
 
 #adding label to volume
 echo ""
