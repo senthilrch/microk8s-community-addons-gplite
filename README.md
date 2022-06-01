@@ -476,7 +476,14 @@ No resources found
 
 #### Step 3: Remove the node label added by gopaddle
 
-Remove the node label added during 'enable', as follows:
+Remove the node label added during 'enable':
+
+Usage:
+```
+sudo microk8s kubectl label nodes <nodename> <label>-
+```
+
+In the case of gopaddle-lite addon, this corresponds to:
 ```
 sudo microk8s kubectl label nodes sail  gp-install-node-
 ```
