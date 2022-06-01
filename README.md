@@ -429,8 +429,9 @@ execute the following steps:
 Follow the below steps to uninstall gopaddle addon for microk8s:  
 Step 1: disable gopaddle addon for microk8s (described in corresponding section above)  
 Step 2: delete all PVs created by gopaddle  
-Step 3: Remove the node label added by gopaddle  
-Step 4: Remove the gopaddle addon repo in microk8s  
+Step 3: delete the storage class created by gopaddle  
+Step 4: Remove the node label added by gopaddle  
+Step 5: Remove the gopaddle addon repo in microk8s  
 
 #### Step 2: delete all PVs created by gopaddle
 
@@ -474,7 +475,19 @@ You should see an output as shown below:
 No resources found
 ```
 
-#### Step 3: Remove the node label added by gopaddle
+#### Step 3: delete the storage class created by gopaddle
+
+Delete 'microk8s-hostpath-gp-retain' storage class created at 'enable' time by gopaddle-lite:
+```
+sudo microk8s kubectl delete sc microk8s-hostpath-gp-retain
+```
+
+You should see the output:
+```
+storageclass.storage.k8s.io "microk8s-hostpath-gp-retain" deleted
+```
+
+#### Step 4: Remove the node label added by gopaddle
 
 Remove the node label added during 'enable':
 
@@ -493,7 +506,7 @@ You should see the below output:
 node/sail unlabeled
 ```
 
-#### Step 4: Remove the gopaddle addon repo in microk8s
+#### Step 5: Remove the gopaddle addon repo in microk8s
 
 The below command removes the gopaddle addon repo in microk8s:
 ```
