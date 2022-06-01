@@ -108,9 +108,9 @@ fi
 
 NODENAME=""
 
-NODELABEL=$($KUBECTL get node -l gp-install-node=node1)
+NODELABEL=$($KUBECTL get node -l gp-install-node=node1 -o json | jq '.items | length' )
 
-if [ "$NODELABEL" = "No resources found" ]
+if [ "$NODELABEL" = "0" ]
 then
 #getting node name
 NODENAME=$(run_with_sudo $KUBECTL get node -o json| jq '.items[0].metadata.name'|cut -d '"' -f 2)
@@ -149,6 +149,7 @@ run_with_sudo $KUBECTL  wait pvc --for=jsonpath='{.status.phase}'=Bound -l relea
 #adding label to volume
 echo ""
 echo "adding label to persistentvolume"
+sleep 1m
 PVCLIST=$(run_with_sudo $KUBECTL get pvc -n gp-lite -o json | jq '.items[].spec.volumeName')
 
 for i in $(echo $PVCLIST | tr " " "\n")
