@@ -20,7 +20,7 @@ fi
  
 
 STATICIP=""
-HELM_VERSION="4.2.3"
+HELM_VERSION="4.2.4"
 STORAGECLASS=""
 ARGS=$(getopt -a --options i:v:s: --longoptions "ip:,version:,storageclass:" -- "$@")
 eval set -- "$ARGS"
