@@ -85,7 +85,7 @@ sudo microk8s enable gopaddle-lite -i <IP Address> -v <gopaddle version>
 Basic Options:
   --ip|-i      : static IP address to assign to gopaddle endpoint. This can be
                  a public or private IP address of the microk8s node
-  --version|-v : gopaddle lite helm chart version (default 4.2.3)
+  --version|-v : gopaddle lite helm chart version (default 4.2.4)
 ```
 
 If the gopaddle dashboard has to to be accessible from public network, then,
@@ -95,7 +95,7 @@ make sure that the IP address passed via '-i' option is an External/Public IP ad
 
 #### Example:
 ```
-sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.4
 ```
 
 The following is a sample output for the above example:
@@ -268,7 +268,7 @@ http://130.198.9.42:30003
 sudo microk8s enable gopaddle-lite
 ```
 
-By default, the latest gopaddle-lite version is installed, which is currently 4.2.3.
+By default, the latest gopaddle-lite version is installed, which is currently 4.2.4.
 
 An IP address is required to access the gopaddle lite end point. When not
 supplied from the command line, the default IP address is determined in the order
@@ -541,8 +541,8 @@ edition. The documentation for the same is available at: https://github.com/gopa
 
 # Support Matrix for gp-lite
 
-The support Matrix for gopaddle lite 4.2.3 is located at:
-http://help.gopaddle.io/en/articles/6227234-support-matrix-for-gopaddle-lite-4-2-3-community-edition
+The support Matrix for gopaddle lite 4.2.4 is located at:
+http://help.gopaddle.io/en/articles/6227234-support-matrix-for-gopaddle-lite-4-2-4-community-edition
  
 # Help
 
