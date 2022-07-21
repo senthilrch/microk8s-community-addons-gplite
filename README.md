@@ -1,5 +1,7 @@
 # microk8s gopaddle addon
 
+gopaddle lite - A lifetime free community edition of gopaddle is now available as an add-on to microk8s.
+
 Note: in the below, the following terms are used interchangeably to
 indicate the 'gopaddle addon' on microk8s:
 - gopaddle Lite addon
@@ -8,7 +10,7 @@ indicate the 'gopaddle addon' on microk8s:
 
 ## Pre-requisites
 
-1. OS distribution: Ubuntu 18.04; MicroK8s version: 1.24; Helm version: v3.7.1
+1. OS distribution: Ubuntu 18.04; MicroK8s version: 1.24;
 
 2. gopaddle Lite add-on is supported only on a single node microk8s cluster
 
@@ -100,7 +102,7 @@ sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.4
 
 The following is a sample output for the above example:
 ```
-$ sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.3
+$ sudo microk8s enable gopaddle-lite -i 130.198.9.42 -v 4.2.4
 Infer repository gp-lite for addon gopaddle-lite
 static IP of the microk8s cluster: 130.198.9.42
 
@@ -513,12 +515,15 @@ sudo microk8s kubectl label nodes <nodename> <label>-
 
 In the case of gopaddle-lite addon, this corresponds to:
 ```
-sudo microk8s kubectl label nodes sail  gp-install-node-
+$ sudo microk8s kubectl get nodes
+NAME               STATUS   ROLES    AGE   VERSION
+ip-172-31-44-186   Ready    <none>   36m   v1.24.0-2+59bbb3530b6769
+$ sudo microk8s kubectl label nodes ip-172-31-44-186  gp-install-node-
 ```
 
 You should see the below output:
 ```
-node/sail unlabeled
+node/ip-172-31-44-186 unlabeled
 ```
 
 #### Step 5: Remove the gopaddle addon repo in microk8s
@@ -542,7 +547,7 @@ edition. The documentation for the same is available at: https://github.com/gopa
 # Support Matrix for gp-lite
 
 The support Matrix for gopaddle lite 4.2.4 is located at:
-http://help.gopaddle.io/en/articles/6227234-support-matrix-for-gopaddle-lite-4-2-4-community-edition
+http://help.gopaddle.io/en/articles/6227234-support-matrix-for-gopaddle-lite-4-2-3-community-edition
  
 # Help
 
