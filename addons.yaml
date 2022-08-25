@@ -6,3 +6,4 @@ microk8s-addons:
       check_status: "deployment.apps/gateway"
       supported_architectures:
         - amd64
+        - aarch64
